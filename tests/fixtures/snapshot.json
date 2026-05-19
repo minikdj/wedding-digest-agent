@@ -1,0 +1,10 @@
+{
+  "date": "2026-05-17",
+  "total": 75,
+  "done": 1,
+  "in_progress": 12,
+  "not_started": 62,
+  "critical_path_total": 22,
+  "critical_path_done": 0,
+  "percent_complete": 1.3
+}

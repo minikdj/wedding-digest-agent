@@ -1,0 +1,58 @@
+{
+  "object": "list",
+  "has_more": false,
+  "next_cursor": null,
+  "results": [
+    {
+      "id": "task-1",
+      "url": "https://www.notion.so/task-1",
+      "last_edited_time": "2026-05-18T13:00:00.000Z",
+      "properties": {
+        "Task": {"type": "title", "title": [{"plain_text": "Look into marriage license"}]},
+        "Status": {"type": "status", "status": {"name": "In progress"}},
+        "Start Date": {"type": "date", "date": {"start": "2026-05-18"}},
+        "Due Date": {"type": "date", "date": {"start": "2026-05-19"}},
+        "Phase": {"type": "multi_select", "multi_select": [{"name": "This Week (5/19-22)"}]},
+        "Owner": {"type": "multi_select", "multi_select": [{"name": "Both"}]},
+        "Category": {"type": "multi_select", "multi_select": [{"name": "Logistics"}]},
+        "Critical Path": {"type": "checkbox", "checkbox": true},
+        "Context": {"type": "rich_text", "rich_text": [{"plain_text": "Need to apply at Hamilton County clerk"}]},
+        "Source": {"type": "select", "select": {"name": "Carried from original"}}
+      }
+    },
+    {
+      "id": "task-2",
+      "url": "https://www.notion.so/task-2",
+      "last_edited_time": "2026-05-18T08:00:00.000Z",
+      "properties": {
+        "Task": {"type": "title", "title": [{"plain_text": "Find tablecloths"}]},
+        "Status": {"type": "status", "status": null},
+        "Start Date": {"type": "date", "date": null},
+        "Due Date": {"type": "date", "date": null},
+        "Phase": {"type": "multi_select", "multi_select": []},
+        "Owner": {"type": "multi_select", "multi_select": [{"name": "Taylor"}]},
+        "Category": {"type": "multi_select", "multi_select": [{"name": "Decor"}]},
+        "Critical Path": {"type": "checkbox", "checkbox": false},
+        "Context": {"type": "rich_text", "rich_text": []},
+        "Source": {"type": "select", "select": {"name": "Claude added"}}
+      }
+    },
+    {
+      "id": "task-3",
+      "url": "https://www.notion.so/task-3",
+      "last_edited_time": "2026-05-18T03:00:00.000Z",
+      "properties": {
+        "Task": {"type": "title", "title": [{"plain_text": "Confirm Carmelo's menu"}]},
+        "Status": {"type": "status", "status": {"name": "Done"}},
+        "Start Date": {"type": "date", "date": {"start": "2026-05-15"}},
+        "Due Date": {"type": "date", "date": {"start": "2026-05-17"}},
+        "Phase": {"type": "multi_select", "multi_select": [{"name": "This Week (5/19-22)"}]},
+        "Owner": {"type": "multi_select", "multi_select": [{"name": "Dan"}]},
+        "Category": {"type": "multi_select", "multi_select": [{"name": "Catering"}]},
+        "Critical Path": {"type": "checkbox", "checkbox": true},
+        "Context": {"type": "rich_text", "rich_text": [{"plain_text": "Final headcount confirmed at 84"}]},
+        "Source": {"type": "select", "select": {"name": "Carried from original"}}
+      }
+    }
+  ]
+}

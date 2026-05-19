@@ -1,0 +1,5 @@
+anthropic>=0.45.0
+requests>=2.31.0
+resend>=2.30.0
+pytest>=8.0.0
+backports.zoneinfo;python_version<"3.9"
