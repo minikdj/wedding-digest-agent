@@ -7,9 +7,9 @@ from typing import Any
 
 import requests
 
-NOTION_VERSION = "2026-03-11"
-DATA_SOURCE_ID = "72b92312-f2da-4785-8be9-f33cabf0e388"
-BASE_URL = f"https://api.notion.com/v1/data_sources/{DATA_SOURCE_ID}/query"
+NOTION_VERSION = "2022-06-28"
+DATABASE_ID = "aa8da7ca-d01d-40a0-aa5b-066c1ca31cf7"
+BASE_URL = f"https://api.notion.com/v1/databases/{DATABASE_ID}/query"
 MAX_RETRIES = 3
 
 

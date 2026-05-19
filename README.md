@@ -88,7 +88,7 @@ Edit `prompts/system.md` or anything under `helpers/`, commit, push. The next cr
 
 **Notion returned 401.** The integration isn't shared with the database. Open the database in Notion → ••• → Connections → add the integration.
 
-**Notion returned 404.** Data-source ID has changed. Update `DATA_SOURCE_ID` in `helpers/notion.py`.
+**Notion returned 404.** Database ID has changed (or the API endpoint shape changed). Update `DATABASE_ID` in `helpers/notion.py`; check the URL in Notion (the 32-char hex string after the last `/`).
 
 **Snapshot commit didn't appear.** The auto `GITHUB_TOKEN` needs `contents: write`. The workflow already requests that via `permissions: contents: write` at the job level — if you removed that block, restore it.
 
