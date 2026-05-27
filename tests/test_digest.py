@@ -1,6 +1,7 @@
 """Tests for the deterministic count/snapshot helpers."""
 from datetime import date
 
+from helpers.claude_summary import _html_to_text
 from helpers.digest import build_snapshot, compute_counts, task_to_jsonable
 
 
@@ -58,6 +59,36 @@ def test_build_snapshot_zero_total():
         "critical_path_total": 0, "critical_path_done": 0,
     })
     assert snap["percent_complete"] == 0.0
+
+
+def test_html_to_text_strips_tags_and_preserves_lines():
+    html = (
+        '<div style="font-family: sans-serif;">'
+        '<h3 style="margin: 0;">Due today / overdue</h3>'
+        '<div>[OVERDUE by 3 days] Owner: Both Task title</div>'
+        '<pre style="font-family: monospace;">Progress: 15 of 76 (19.7%)</pre>'
+        '<p>Hello <strong>world</strong></p>'
+        '<br>Final line'
+        '</div>'
+    )
+    text = _html_to_text(html)
+    assert "Due today / overdue" in text
+    assert "Owner: Both Task title" in text
+    assert "Progress: 15 of 76 (19.7%)" in text
+    assert "Hello world" in text
+    assert "Final line" in text
+    assert "<" not in text and ">" not in text
+
+
+def test_html_to_text_decodes_allowed_entities():
+    assert _html_to_text("<p>A &amp; B</p>") == "A & B"
+    assert _html_to_text("<p>&lt;tag&gt;</p>") == "<tag>"
+
+
+def test_html_to_text_collapses_blank_lines():
+    html = "<p>One</p><p></p><p></p><p>Two</p>"
+    text = _html_to_text(html)
+    assert text.count("\n\n") <= 1
 
 
 def test_task_to_jsonable_strips_datetimes():

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import re
+import sys
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -71,8 +73,44 @@ def compose_digest(
 
     for block in resp.content:
         if block.type == "tool_use" and block.name == "emit_digest":
-            return dict(block.input)
+            result = dict(block.input)
+            if not result.get("subject"):
+                raise RuntimeError(f"emit_digest returned no subject; keys={sorted(result)}")
+            if not result.get("html"):
+                raise RuntimeError(f"emit_digest returned no html; keys={sorted(result)}")
+            if not result.get("text", "").strip():
+                # Anthropic's tool-schema enforcement is best-effort; Claude
+                # occasionally omits required fields. Derive text from html
+                # so the digest still ships rather than crashing the run.
+                sys.stderr.write(
+                    "WARN: emit_digest missing 'text' field, deriving from html\n"
+                )
+                result["text"] = _html_to_text(result["html"])
+            return result
 
     raise RuntimeError(
         f"Claude did not call emit_digest. stop_reason={resp.stop_reason!r}"
     )
+
+
+_BLOCK_CLOSE_RE = re.compile(r"</(p|div|h[1-6]|li|pre)\s*>", re.I)
+_BR_RE = re.compile(r"<br\s*/?>", re.I)
+_TAG_RE = re.compile(r"<[^>]+>")
+_BLANKS_RE = re.compile(r"\n{3,}")
+
+
+def _html_to_text(html: str) -> str:
+    """Best-effort fallback: convert HTML body to readable plain text.
+
+    Only used when Claude omits the required `text` field. Not a general HTML
+    sanitizer — the system prompt forbids HTML entities in the body, so we
+    decode only the small allowed set.
+    """
+    s = _BR_RE.sub("\n", html)
+    s = _BLOCK_CLOSE_RE.sub("\n", s)
+    s = _TAG_RE.sub("", s)
+    for entity, char in (("&amp;", "&"), ("&lt;", "<"), ("&gt;", ">"),
+                          ("&quot;", '"'), ("&nbsp;", " ")):
+        s = s.replace(entity, char)
+    s = _BLANKS_RE.sub("\n\n", s)
+    return s.strip()
